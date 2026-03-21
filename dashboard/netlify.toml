@@ -1,0 +1,32 @@
+[build]
+  command = "npm run build"
+  functions = "netlify/functions"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Environment variables for production
+[context.production.environment]
+  VITE_API_URL = "https://your-backend.onrender.com"
+
+# Preview deployments (staging)
+[context.deploy-preview.environment]
+  VITE_API_URL = "https://your-backend-staging.onrender.com"
+
+# Development/branch deployments
+[context.branch-deploy.environment]
+  VITE_API_URL = "https://your-backend-staging.onrender.com"
+
+# Redirect API calls to the backend
+[[redirects]]
+  from = "/api/*"
+  to = "https://your-backend.onrender.com/api/:splat"
+  status = 200
+  force = false
+
+# SPA fallback for client-side routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

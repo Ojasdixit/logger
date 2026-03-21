@@ -1,26 +1,30 @@
 # Dependencies
 node_modules/
-**/node_modules/
+package-lock.json
+yarn.lock
 
-# Environment variables — NEVER commit secrets
+# Environment
 .env
 .env.local
 .env.*.local
-**/.env
-**/.env.local
 
 # Build outputs
 dist/
 build/
 
-# Logs
-*.log
-npm-debug.log*
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Editor
+# IDE
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+agent.log
+
+# Agent
+.employee-monitor-agent/

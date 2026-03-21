@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(\"/Users/admin/Desktop/logger app:*)"
+    ]
+  }
+}
