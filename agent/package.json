@@ -1,0 +1,24 @@
+{
+  "name": "employee-monitor-agent",
+  "version": "1.0.0",
+  "description": "Employee monitoring desktop agent",
+  "main": "src/index.js",
+  "bin": {
+    "em-agent": "./src/index.js",
+    "em-setup": "./src/setup.js"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "setup": "node src/setup.js",
+    "install-service": "node src/service.js install",
+    "uninstall-service": "node src/service.js uninstall"
+  },
+  "dependencies": {
+    "active-win": "^8.1.0",
+    "axios": "^1.7.9",
+    "form-data": "^4.0.1",
+    "node-notifier": "^10.0.1",
+    "screenshot-desktop": "^1.15.0",
+    "sharp": "^0.33.5"
+  }
+}

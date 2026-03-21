@@ -1,0 +1,13 @@
+{
+  "apiUrl": "http://localhost:4000/api",
+  "apiKey": "agent-secret-key-2026",
+  "userId": "ed8e8815-ba0d-4f40-8383-4abc6e397485",
+  "screenshotIntervalMs": 600000,
+  "activityTrackIntervalMs": 10000,
+  "activityFlushIntervalMs": 60000,
+  "idleThresholdMs": 120000,
+  "screenshot": {
+    "width": 1280,
+    "quality": 60
+  }
+}
