@@ -10,21 +10,22 @@ export default function Downloads() {
     fetchEmployees().then(setEmployees);
   }, []);
 
-  const serverUrl = window.location.origin;
+  const apiUrl = import.meta.env.VITE_API_URL || window.location.origin;
+  const installerUrl = import.meta.env.VITE_INSTALLER_URL || "https://employee-monitor-installers.onrender.com";
   const apiKey = "agent-secret-key-2026"; // matches backend default
 
   function installCmd(platform: "macos" | "linux" | "windows") {
     if (!selected) return "Select an employee first";
 
-    const base = `EMPLOYEE_ID="${selected}" API_URL="${serverUrl}/api" API_KEY="${apiKey}"`;
+    const base = `EMPLOYEE_ID="${selected}" API_URL="${apiUrl}/api" API_KEY="${apiKey}"`;
 
     switch (platform) {
       case "macos":
-        return `curl -fsSL ${serverUrl}/install/macos.sh | ${base} bash`;
+        return `curl -fsSL ${installerUrl}/installers/install-macos.sh | ${base} bash`;
       case "linux":
-        return `curl -fsSL ${serverUrl}/install/linux.sh | ${base} bash`;
+        return `curl -fsSL ${installerUrl}/installers/install-linux.sh | ${base} bash`;
       case "windows":
-        return `$env:EMPLOYEE_ID="${selected}"; $env:API_URL="${serverUrl}/api"; $env:API_KEY="${apiKey}"; irm ${serverUrl}/install/windows.ps1 | iex`;
+        return `$env:EMPLOYEE_ID="${selected}"; $env:API_URL="${apiUrl}/api"; $env:API_KEY="${apiKey}"; irm ${installerUrl}/installers/install-windows.ps1 | iex`;
     }
   }
 
@@ -35,7 +36,7 @@ export default function Downloads() {
       `2. Download the agent: git clone <your-repo> employee-monitor-agent`,
       `3. cd employee-monitor-agent && npm install`,
       `4. Run setup: npm run setup`,
-      `   → Server URL: ${serverUrl}/api`,
+      `   → Server URL: ${apiUrl}/api`,
       `   → API Key: ${apiKey}`,
       `   → Employee ID: ${selected}`,
       `5. Start: npm start`,

@@ -9,14 +9,17 @@
 # Environment variables for production
 [context.production.environment]
   VITE_API_URL = "https://your-backend.onrender.com"
+  VITE_INSTALLER_URL = "https://employee-monitor-installers.onrender.com"
 
 # Preview deployments (staging)
 [context.deploy-preview.environment]
   VITE_API_URL = "https://your-backend-staging.onrender.com"
+  VITE_INSTALLER_URL = "https://employee-monitor-installers.onrender.com"
 
 # Development/branch deployments
 [context.branch-deploy.environment]
   VITE_API_URL = "https://your-backend-staging.onrender.com"
+  VITE_INSTALLER_URL = "https://employee-monitor-installers.onrender.com"
 
 # Redirect API calls to the backend
 [[redirects]]
