@@ -46,7 +46,7 @@ export interface ActivityLog {
   timestamp: string;
 }
 
-export interface PaginatedResponse<T> {
+export interface PaginatedResponse {
   total: number;
   page: number;
   totalPages: number;
@@ -68,7 +68,7 @@ export async function fetchScreenshots(
   userId: string,
   date?: string,
   page = 1
-): Promise<{ screenshots: Screenshot[] } & PaginatedResponse<Screenshot>> {
+): Promise<{ screenshots: Screenshot[] } & PaginatedResponse> {
   const params: Record<string, string | number> = { page, limit: 20 };
   if (date) params.date = date;
   const { data } = await api.get(`/employee/${userId}/screenshots`, { params });
@@ -81,7 +81,7 @@ export async function fetchActivity(
   date?: string,
   status?: string,
   page = 1
-): Promise<{ activities: ActivityLog[] } & PaginatedResponse<ActivityLog>> {
+): Promise<{ activities: ActivityLog[] } & PaginatedResponse> {
   const params: Record<string, string | number> = { page, limit: 50 };
   if (date) params.date = date;
   if (status) params.status = status;
