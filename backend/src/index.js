@@ -15,7 +15,18 @@ app.use(express.json({ limit: "10mb" }));
 
 // Health check
 app.get("/api/health", (req, res) => {
-  res.json({ status: "ok", timestamp: new Date().toISOString() });
+  res.json({
+    status: "ok",
+    timestamp: new Date().toISOString(),
+    env_check: {
+      has_supabase_url: !!process.env.SUPABASE_URL,
+      has_supabase_key: !!process.env.SUPABASE_SERVICE_KEY,
+      has_admin_username: !!process.env.ADMIN_USERNAME,
+      has_admin_password: !!process.env.ADMIN_PASSWORD,
+      has_agent_key: !!process.env.AGENT_API_KEY,
+      admin_username_value: process.env.ADMIN_USERNAME,
+    },
+  });
 });
 
 // Routes
