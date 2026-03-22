@@ -9,17 +9,17 @@
 # Environment variables for production
 [context.production.environment]
   VITE_API_URL = "https://logger-lhu8.onrender.com"
-  VITE_INSTALLER_URL = "https://employee-monitor-installers.onrender.com"
+  VITE_INSTALLER_URL = "https://logger-1-u9b8.onrender.com"
 
 # Preview deployments (staging)
 [context.deploy-preview.environment]
-  VITE_API_URL = "https://your-backend-staging.onrender.com"
-  VITE_INSTALLER_URL = "https://employee-monitor-installers.onrender.com"
+  VITE_API_URL = "https://logger-lhu8.onrender.com"
+  VITE_INSTALLER_URL = "https://logger-1-u9b8.onrender.com"
 
 # Development/branch deployments
 [context.branch-deploy.environment]
-  VITE_API_URL = "https://your-backend-staging.onrender.com"
-  VITE_INSTALLER_URL = "https://employee-monitor-installers.onrender.com"
+  VITE_API_URL = "https://logger-lhu8.onrender.com"
+  VITE_INSTALLER_URL = "https://logger-1-u9b8.onrender.com"
 
 # Redirect API calls to the backend
 [[redirects]]
