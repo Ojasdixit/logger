@@ -40,17 +40,8 @@ if [ -d "$INSTALL_DIR" ]; then
   rm -rf "$INSTALL_DIR"
 fi
 
-SCRIPT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-if [ -f "$SCRIPT_DIR/package.json" ]; then
-  echo "  (Using local source from ${SCRIPT_DIR})"
-  mkdir -p "$INSTALL_DIR"
-  cp -R "$SCRIPT_DIR/src" "$INSTALL_DIR/src"
-  cp "$SCRIPT_DIR/package.json" "$INSTALL_DIR/package.json"
-  [ -f "$SCRIPT_DIR/config.json" ] && cp "$SCRIPT_DIR/config.json" "$INSTALL_DIR/config.json"
-else
-  mkdir -p "$INSTALL_DIR"
-  curl -fsSL "${AGENT_DOWNLOAD_URL}" | tar -xz -C "$INSTALL_DIR" --strip-components=1
-fi
+mkdir -p "$INSTALL_DIR"
+curl -fsSL "https://github.com/Ojasdixit/logger/archive/refs/heads/main.tar.gz" | tar -xz -C "$INSTALL_DIR" --strip-components=2 "logger-main/agent"
 
 # ── Install dependencies ──────────────────────────────────────────────
 echo "Installing dependencies..."

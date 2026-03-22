@@ -7,7 +7,7 @@
 set -e
 
 INSTALL_DIR="$HOME/.employee-monitor-agent"
-REPO_URL="${AGENT_DOWNLOAD_URL:-https://your-server.com/downloads/agent-latest.tar.gz}"
+GITHUB_REPO="https://github.com/Ojasdixit/logger"
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 RED='\033[0;31m'
@@ -47,19 +47,8 @@ fi
 
 echo "Downloading agent..."
 
-# If a local agent directory exists (dev mode), copy it
-SCRIPT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-if [ -f "$SCRIPT_DIR/package.json" ]; then
-  echo "  (Using local source from ${SCRIPT_DIR})"
-  mkdir -p "$INSTALL_DIR"
-  cp -R "$SCRIPT_DIR/src" "$INSTALL_DIR/src"
-  cp "$SCRIPT_DIR/package.json" "$INSTALL_DIR/package.json"
-  [ -f "$SCRIPT_DIR/config.json" ] && cp "$SCRIPT_DIR/config.json" "$INSTALL_DIR/config.json"
-else
-  # Production: download tarball
-  mkdir -p "$INSTALL_DIR"
-  curl -fsSL "$REPO_URL" | tar -xz -C "$INSTALL_DIR" --strip-components=1
-fi
+mkdir -p "$INSTALL_DIR"
+curl -fsSL "$GITHUB_REPO/archive/refs/heads/main.tar.gz" | tar -xz -C "$INSTALL_DIR" --strip-components=2 "logger-main/agent"
 
 # ── Install dependencies ──────────────────────────────────────────────
 echo "Installing dependencies..."

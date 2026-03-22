@@ -64,8 +64,10 @@ async function main() {
 
   // Step 1: Server connection
   console.log("─── Step 1: Server Connection ───\n");
-  const apiUrl = await ask(rl, "  Backend API URL", existing.apiUrl);
-  const apiKey = await ask(rl, "  Agent API Key", existing.apiKey);
+  const apiUrl = process.env.API_URL || await ask(rl, "  Backend API URL", existing.apiUrl);
+  const apiKey = process.env.API_KEY || await ask(rl, "  Agent API Key", existing.apiKey);
+  if (process.env.API_URL) console.log(`  ✓ API URL: ${apiUrl}`);
+  if (process.env.API_KEY) console.log(`  ✓ API Key: (pre-configured)`);
 
   // Validate connection
   console.log("\n  Testing connection...");
@@ -81,7 +83,8 @@ async function main() {
 
   // Step 2: Employee identity
   console.log("─── Step 2: Employee Identity ───\n");
-  const userId = await ask(rl, "  Employee User ID (UUID from admin)", existing.userId);
+  const userId = process.env.EMPLOYEE_ID || await ask(rl, "  Employee User ID (UUID from admin)", existing.userId);
+  if (process.env.EMPLOYEE_ID) console.log(`  ✓ Employee ID: ${userId}`);
 
   if (!userId) {
     console.log("\n  ⚠ No User ID provided. The agent won't work without one.");
@@ -90,20 +93,14 @@ async function main() {
 
   // Step 3: Monitoring settings
   console.log("─── Step 3: Monitoring Settings ───\n");
-  const ssIntervalMin = await ask(
-    rl,
-    "  Screenshot interval (minutes)",
-    String(existing.screenshotIntervalMs / 60000)
-  );
-  const idleMin = await ask(
-    rl,
-    "  Idle timeout (minutes)",
-    String(existing.idleThresholdMs / 60000)
-  );
+  const ssIntervalMin = process.env.SCREENSHOT_INTERVAL ||
+    await ask(rl, "  Screenshot interval (minutes)", String(existing.screenshotIntervalMs / 60000));
+  const idleMin = process.env.IDLE_TIMEOUT ||
+    await ask(rl, "  Idle timeout (minutes)", String(existing.idleThresholdMs / 60000));
 
   // Step 4: Auto-start
   console.log("\n─── Step 4: Auto-Start ───\n");
-  const autoStart = await ask(rl, "  Start agent on system boot? (y/n)", "y");
+  const autoStart = process.env.AUTO_START || await ask(rl, "  Start agent on system boot? (y/n)", "y");
 
   rl.close();
 

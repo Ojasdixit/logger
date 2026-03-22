@@ -3,6 +3,7 @@ interface StatusBadgeProps {
 }
 
 export default function StatusBadge({ status }: StatusBadgeProps) {
+  const safeStatus = status ?? "offline";
   const colors = {
     active: "bg-green-100 text-green-800 border-green-200",
     idle: "bg-yellow-100 text-yellow-800 border-yellow-200",
@@ -17,10 +18,10 @@ export default function StatusBadge({ status }: StatusBadgeProps) {
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${colors[status]}`}
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${colors[safeStatus]}`}
     >
-      <span className={`w-1.5 h-1.5 rounded-full ${dots[status]}`} />
-      {status.charAt(0).toUpperCase() + status.slice(1)}
+      <span className={`w-1.5 h-1.5 rounded-full ${dots[safeStatus]}`} />
+      {safeStatus.charAt(0).toUpperCase() + safeStatus.slice(1)}
     </span>
   );
 }

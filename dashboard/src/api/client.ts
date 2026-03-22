@@ -63,6 +63,11 @@ export async function fetchEmployee(id: string): Promise<Employee> {
   return data.employee;
 }
 
+export async function createEmployee(name: string, email: string, department?: string): Promise<Employee> {
+  const { data } = await api.post("/employees", { name, email, department });
+  return data.employee;
+}
+
 // ── Screenshot APIs ──────────────────────────────────────────────────
 export async function fetchScreenshots(
   userId: string,

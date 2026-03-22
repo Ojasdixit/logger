@@ -1,13 +1,14 @@
 #!/bin/bash
 # ──────────────────────────────────────────────────────────────────────
 #  Employee Monitor Agent — macOS Installer
-#  Run with: curl -fsSL <your-server>/install/macos | bash
+#  Run with: curl -fsSL <installer-url>/installers/install-macos.sh | \
+#    EMPLOYEE_ID="..." API_URL="..." API_KEY="..." bash
 # ──────────────────────────────────────────────────────────────────────
 
 set -e
 
 INSTALL_DIR="$HOME/.employee-monitor-agent"
-REPO_URL="${AGENT_DOWNLOAD_URL:-https://your-server.com/downloads/agent-latest.tar.gz}"
+GITHUB_REPO="https://github.com/Ojasdixit/logger"
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 RED='\033[0;31m'
@@ -35,31 +36,13 @@ echo -e "${GREEN}✓${NC} Node.js ${NODE_VERSION} found"
 
 # ── Download agent ────────────────────────────────────────────────────
 if [ -d "$INSTALL_DIR" ]; then
-  echo -e "${YELLOW}Existing installation found at ${INSTALL_DIR}${NC}"
-  echo -n "  Overwrite? (y/n): "
-  read -r OVERWRITE
-  if [ "$OVERWRITE" != "y" ]; then
-    echo "Aborted."
-    exit 0
-  fi
+  echo -e "${YELLOW}Existing installation found. Overwriting...${NC}"
   rm -rf "$INSTALL_DIR"
 fi
 
-echo "Downloading agent..."
-
-# If a local agent directory exists (dev mode), copy it
-SCRIPT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-if [ -f "$SCRIPT_DIR/package.json" ]; then
-  echo "  (Using local source from ${SCRIPT_DIR})"
-  mkdir -p "$INSTALL_DIR"
-  cp -R "$SCRIPT_DIR/src" "$INSTALL_DIR/src"
-  cp "$SCRIPT_DIR/package.json" "$INSTALL_DIR/package.json"
-  [ -f "$SCRIPT_DIR/config.json" ] && cp "$SCRIPT_DIR/config.json" "$INSTALL_DIR/config.json"
-else
-  # Production: download tarball
-  mkdir -p "$INSTALL_DIR"
-  curl -fsSL "$REPO_URL" | tar -xz -C "$INSTALL_DIR" --strip-components=1
-fi
+echo "Downloading agent from GitHub..."
+mkdir -p "$INSTALL_DIR"
+curl -fsSL "$GITHUB_REPO/archive/refs/heads/main.tar.gz" | tar -xz -C "$INSTALL_DIR" --strip-components=2 "logger-main/agent"
 
 # ── Install dependencies ──────────────────────────────────────────────
 echo "Installing dependencies..."
@@ -72,7 +55,7 @@ echo -e "${GREEN}✓${NC} Agent installed at ${INSTALL_DIR}"
 echo ""
 echo "─── Running setup wizard ───"
 echo ""
-node src/setup.js
+EMPLOYEE_ID="$EMPLOYEE_ID" API_URL="$API_URL" API_KEY="$API_KEY" AUTO_START="y" node src/setup.js < /dev/tty
 
 echo ""
 echo -e "${GREEN}✓ Installation complete!${NC}"
